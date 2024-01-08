@@ -4,13 +4,13 @@ const User = require('../models/user');
 const authMiddleware = require('../middlewares/authMiddleware');
 const Joi = require('joi');
 
-// Validation middleware (you may already have this)
+// Validation middleware 
 const validateUser = (req, res, next) => {
-  // Implement your validation logic here
+  
   next();
 };
 
-// Create User route
+// Creating User route {POST}
 router.post('/', authMiddleware, validateUser, async (req, res) => {
   try {
     const user = new User(req.body);
@@ -48,7 +48,7 @@ router.get('/:userId', authMiddleware, async (req, res) => {
   }
 });
 
-// Update User by ID route
+// Update User by ID route {PUT}
 router.put('/:userId', authMiddleware, validateUser, async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(req.params.userId, req.body, { new: true });
