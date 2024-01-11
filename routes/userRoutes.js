@@ -39,7 +39,6 @@ router.get('/', authMiddleware, async (req, res) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 }); 
-//
 
 // Get User by ID route
 router.get('/:userId', authMiddleware, async (req, res) => {
@@ -89,12 +88,6 @@ module.exports = router;
 
 //----------------------------------------------------//
 
-// const express = require('express');
-// const router = express.Router();
-// const User = require('../models/user');
-// const authMiddleware = require('../middlewares/authMiddleware');
-// const Joi = require('joi');
-// const redis = require('redis');
 
 // // Create a Redis client
 // const createRedisClient = () => {
@@ -112,12 +105,6 @@ module.exports = router;
 //   return client;
 // };
 
-// // Validation middleware (you may already have this)
-// const validateUser = (req, res, next) => {
-//   // Implement your validation logic here
-//   next();
-// };
-
 // // Create User route
 // router.post('/', authMiddleware, validateUser, async (req, res) => {
 //   const client = createRedisClient();
@@ -126,7 +113,7 @@ module.exports = router;
 //     const user = new User(req.body);
 //     await user.save();
 
-//     // Store user data in Upstash with an expiration time (e.g., 1 hour)
+//     // Store user data in Upstash with an expiration time
 //     client.setex(user.id.toString(), 3600, JSON.stringify(user), (err, reply) => {
 //       if (err) {
 //         console.error('Error storing user data in Upstash:', err);
