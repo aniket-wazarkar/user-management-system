@@ -2,13 +2,17 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const authMiddleware = require('../middlewares/authMiddleware');
+//const validateUser = require('../middlewares/validate-user')//
 const Joi = require('joi');
 const redisClient = require('../redisClient');
 const redis = require('redis');
 
 // Validation middleware 
 const validateUser = (req, res, next) => {
-  
+  const { error } = User.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: 'Validation error', error: error.details });
+  }
   next();
 };
 

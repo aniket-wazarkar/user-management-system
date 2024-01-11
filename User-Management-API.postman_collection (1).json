@@ -8,15 +8,19 @@
 	},
 	"item": [
 		{
-			"name": "Get data",
+			"name": "Update Data",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
+							"// Test for updating a user by ID",
+							"pm.test('Update User by ID - Status Code is 200', function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
+							"    pm.response.to.be.json;",
+							"    pm.response.to.have.property('json');",
+							"});",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -63,8 +67,11 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful POST request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"// Test for creating a user",
+							"pm.test('Create User - Status Code is 201', function () {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.have.property('json');",
 							"});",
 							""
 						],
@@ -107,14 +114,20 @@
 			"response": []
 		},
 		{
-			"name": "Update data",
+			"name": "ALL Users",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful PUT request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+							"// Test for getting all users",
+							"pm.test('Get All Users - Status Code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.have.property('json');",
+							"    pm.response.json().to.have.property('users');",
+							"    pm.response.json().users.to.be.an('array');",
+							"    ",
 							"});",
 							""
 						],
@@ -167,8 +180,11 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful DELETE request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+							"// Test for deleting a user by ID",
+							"pm.test('Delete User by ID - Status Code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.have.property('json');",
 							"});",
 							""
 						],
@@ -195,7 +211,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users",
+					"raw": "http://localhost:3000/api/users/659a5aaaf5f4a162467e791a",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -203,7 +219,8 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"users"
+						"users",
+						"659a5aaaf5f4a162467e791a"
 					],
 					"query": [
 						{
@@ -214,6 +231,63 @@
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "GET User ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for getting a specific user by ID\r",
+							"pm.test('Get User by ID - Status Code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.response.to.have.property('json');\r",
+							"    pm.response.json().to.have.property('userId');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"value": "SecretKey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Aniket\",\r\n  \"lastName\": \"Manoj Wazarkar\",\r\n  \"age\": 24,\r\n  \"location\": \"Mumbai\",\r\n  \"interests\": [\"Reading\", \"Coding\"],\r\n  \"income\": 50000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/659a5c903caea5241f51cb4b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"659a5c903caea5241f51cb4b"
+					]
+				}
 			},
 			"response": []
 		}
