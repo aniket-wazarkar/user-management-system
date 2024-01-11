@@ -7,15 +7,6 @@ const Joi = require('joi');
 const redisClient = require('../redisClient');
 const redis = require('redis');
 
-//Validation middleware 
-// const validateUser = (req, res, next) => {
-//   const { error } = User.validate(req.body);
-//   if (error) {
-//     return res.status(400).json({ message: 'Validation error', error: error.details });
-//   }
-//   next();
-// };
-
 // Creating User route {POST}
 router.post('/', authMiddleware, validateUser, async (req, res) => {
   try {
@@ -73,7 +64,7 @@ router.delete('/:userId', authMiddleware, async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.userId);
     if (!deletedUser) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found or maybe already deleted' });
     }
     return res.status(200).json({ message: 'User deleted successfully' });
   } catch (error) {
