@@ -38,7 +38,8 @@ router.get('/', authMiddleware, async (req, res) => {
     console.error('Error getting users:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
-});
+}); 
+//
 
 // Get User by ID route
 router.get('/:userId', authMiddleware, async (req, res) => {
