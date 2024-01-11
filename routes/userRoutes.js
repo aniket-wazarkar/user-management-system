@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require('../models/user');
 const authMiddleware = require('../middlewares/authMiddleware');
 const Joi = require('joi');
+const redisClient = require('../redisClient');
+const redis = require('redis');
 
 // Validation middleware 
 const validateUser = (req, res, next) => {
